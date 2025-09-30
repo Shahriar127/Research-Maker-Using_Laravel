@@ -17,18 +17,17 @@ A web application for managing and sharing research posts, built with Laravel an
 Image examples from the application:
 
 - **Homepage & Research List**  
-  ![Homepage and Research List](./screenshots/screenshot4.png)
+  ![Homepage and Research List](./screenshots/Screenshot%202025-09-30%20145920.png)
 
 - **Research Listing and Pagination**  
-  ![Research Listing](./screenshots/screenshot2.png)
+  ![Research Listing](./screenshots/Screenshot%202025-09-30%20145940.png)
 
 - **Research Details Page**  
-  ![Research Details](./screenshots/screenshot1.png)
+  ![Research Details](./screenshots/Screenshot%202025-09-30%20145953.png)
 
 - **Category and Post Cards**  
-  ![Category and Post Cards](./screenshots/screenshot3.png)
+  ![Category and Post Cards](./screenshots/Screenshot%202025-09-30%20150009.png)
 
-*(Screenshots are for illustrative purposes; filenames should match your project's screenshot directory and naming convention.)*
 
 ## Getting Started
 
