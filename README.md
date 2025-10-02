@@ -12,23 +12,6 @@ A web application for managing and sharing research posts, built with Laravel an
 - Clean, component-based Blade templates
 - Newsletter/contact section
 
-## Screenshots
-
-Image examples from the application:
-
-- **Homepage & Research List**  
-  ![Homepage and Research List](./screenshots/screenshot4.png)
-
-- **Research Listing and Pagination**  
-  ![Research Listing](./screenshots/screenshot2.png)
-
-- **Research Details Page**  
-  ![Research Details](./screenshots/screenshot1.png)
-
-- **Category and Post Cards**  
-  ![Category and Post Cards](./screenshots/screenshot3.png)
-
-*(Screenshots are for illustrative purposes; filenames should match your project's screenshot directory and naming convention.)*
 
 ## Getting Started
 
