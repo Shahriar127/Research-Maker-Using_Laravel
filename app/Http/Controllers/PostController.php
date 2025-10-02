@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Routing\Controller;
 use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function index()
     {
         return view('posts.index', [
             'posts' => Post::latest()->filter(
                 request(['search', 'category', 'author'])
-            )->paginate(6)->withQueryString()
+            )->paginate(7)->withQueryString()
         ]);
     }
 
@@ -23,4 +22,5 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
+
 }

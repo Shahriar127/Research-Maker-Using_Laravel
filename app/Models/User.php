@@ -2,34 +2,19 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
-
+    use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * The attributes that should be hidden for arrays.
      *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
+     * @var array
      */
     protected $hidden = [
         'password',
@@ -37,21 +22,42 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * The attributes that should be cast to native types.
      *
-     * @return array<string, string>
+     * @var array
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
-    
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'is_admin' => 'boolean',
+    ];
 
-    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'username',
+        'email',
+        'password',
+        'email_verified_at',
+        'remember_token',
+    ];
+
+    public function setPasswordAttribute($password)
     {
-        return $this->hasMany(Post::class, 'user_id');
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function isAdmin()
+    {
+        // Hardcoded admin name check
+        return $this->name === 'Sabrina Sa'; // Change 'John Doe' to your admin's name in DB
     }
 }

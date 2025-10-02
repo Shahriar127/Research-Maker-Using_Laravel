@@ -2,45 +2,60 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
     use HasFactory;
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    protected $with = ['category', 'author'];
+
+    protected $fillable = [
+        'title',
+        'body',
+        'slug',
+        'excerpt',
+        'thumbnail',
+        'user_id',
+        'category_id',
+        'published_at',
+    ];
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? false, fn($query, $search) =>
+        $query->where(fn($query) =>
+        $query->where('title', 'like', '%' . $search . '%')
+            ->orWhere('body', 'like', '%' . $search . '%')
+        )
+        );
+
+        $query->when($filters['category'] ?? false, fn($query, $category) =>
+        $query->whereHas('category', fn ($query) =>
+        $query->where('slug', $category)
+        )
+        );
+
+        $query->when($filters['author'] ?? false, fn($query, $author) =>
+        $query->whereHas('author', fn ($query) =>
+        $query->where('username', $author)
+        )
+        );
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function author(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    // Add a filter scope for searching, category, and author
-    public function scopeFilter(
-        $query,
-        array $filters
-    ) {
-        if ($search = $filters['search'] ?? false) {
-            $query->where(function ($query) use ($search) {
-                $query->where('title', 'like', '%' . $search . '%')
-                      ->orWhere('body', 'like', '%' . $search . '%');
-            });
-        }
-
-        if ($category = $filters['category'] ?? false) {
-            $query->whereHas('category', function ($query) use ($category) {
-                $query->where('slug', $category);
-            });
-        }
-
-        if ($author = $filters['author'] ?? false) {
-            $query->whereHas('author', function ($query) use ($author) {
-                $query->where('username', $author);
-            });
-        }
     }
 }

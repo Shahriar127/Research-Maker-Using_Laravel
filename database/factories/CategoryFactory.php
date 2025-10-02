@@ -21,8 +21,11 @@ class CategoryFactory extends Factory
      */
     public function definition()
     {
+        // Use a combination of a word and a random number to ensure uniqueness and avoid overflow
+        $word = $this->faker->word();
+        $number = $this->faker->unique()->numberBetween(1, 1000000);
         return [
-            'name' => $this->faker->unique()->word(),
+            'name' => $word . '-' . $number,
             'slug' => $this->faker->unique()->slug()
         ];
     }

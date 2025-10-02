@@ -14,11 +14,11 @@
     class="transition-colors duration-300 hover:bg-gray-100 border border-black border-opacity-0 hover:border-opacity-5 rounded-xl">
     <div class="py-6 px-5 lg:flex">
         <div class="flex-1 lg:mr-8">
-            <img src="{{ $selectedImage }}" alt="Blog Post illustration" class="rounded-xl w-full h-48 lg:h-64 object-cover">
+            <img src="{{ $selectedImage }}" alt="Blog Post illustration" class="rounded-xl w-full h-55 lg:h-70 object-cover">
         </div>
 
-        <div class="flex-1 flex flex-col justify-between">
-            <header class="mt-8 lg:mt-0">
+        <div class="flex-1 flex flex-col">
+            <header class="mt-0 lg:mt-2">
                 <div class="space-x-2">
                     <x-category-button :category="$post->category" />
                 </div>
@@ -36,26 +36,26 @@
                 </div>
             </header>
 
-            <div class="text-sm mt-2 space-y-4">
+            <div class="text-sm mt-6    ">
                 {!! $post->excerpt !!}
             </div>
 
-{{--            <footer class="flex justify-between items-center mt-8">--}}
-{{--                <div class="flex items-center text-sm">--}}
-{{--                    <img src="/images/lary-avatar.svg" alt="Lary avatar">--}}
-{{--                    <div class="ml-3">--}}
-{{--                        <h5 class="font-bold">--}}
-{{--                            <a href="/?author={{ $post->author->username }}">{{ $post->author->name }}</a>--}}
-{{--                        </h5>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
+            {{--            <footer class="flex justify-between items-center mt-8">--}}
+            {{--                <div class="flex items-center text-sm">--}}
+            {{--                    <img src="/images/lary-avatar.svg" alt="Lary avatar">--}}
+            {{--                    <div class="ml-3">--}}
+            {{--                        <h5 class="font-bold">--}}
+            {{--                            <a href="/?author={{ $post->author->username }}">{{ $post->author->name }}</a>--}}
+            {{--                        </h5>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
 
-{{--                <div class="hidden lg:block">--}}
-{{--                    <a href="/posts/{{ $post->slug }}"--}}
-{{--                       class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"--}}
-{{--                    >Read More</a>--}}
-{{--                </div>--}}
-{{--            </footer>--}}
+            {{--                <div class="hidden lg:block">--}}
+            {{--                    <a href="/posts/{{ $post->slug }}"--}}
+            {{--                       class="transition-colors duration-300 text-xs font-semibold bg-gray-200 hover:bg-gray-300 rounded-full py-2 px-8"--}}
+            {{--                    >Read More</a>--}}
+            {{--                </div>--}}
+            {{--            </footer>--}}
         </div>
     </div>
 </article>

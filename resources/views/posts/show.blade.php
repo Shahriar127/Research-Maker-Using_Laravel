@@ -1,70 +1,61 @@
 <x-layout>
-    <main class="max-w-4xl mx-auto mt-10 lg:mt-20 space-y-6 px-6">
-        <article class="space-y-8">
-            <!-- Back to Posts Navigation -->
-            <div class="flex justify-between items-center">
-                <a href="/"
-                   class="transition-colors duration-300 relative inline-flex items-center text-lg hover:text-blue-500">
-                    <svg width="22" height="22" viewBox="0 0 22 22" class="mr-2">
-                        <g fill="none" fill-rule="evenodd">
-                            <path stroke="#000" stroke-opacity=".012" stroke-width=".5" d="M21 1v20.16H.84V1z">
-                            </path>
-                            <path class="fill-current"
-                                  d="M13.854 7.224l-3.847 3.856 3.847 3.856-1.184 1.184-5.04-5.04 5.04-5.04z">
-                            </path>
-                        </g>
-                    </svg>
-                    Back to Posts
-                </a>
+    <main class="max-w-6xl mx-auto mt-10 lg:mt-20 space-y-6">
+        <article class="max-w-4xl mx-auto lg:grid lg:grid-cols-12 gap-x-10">
+            <div class="col-span-4 lg:text-center lg:pt-14 mb-10">
+                <img src="{{ asset('storage/' . $post->thumbnail) }}" alt="" class="rounded-xl">
 
-                <div class="space-x-2">
-                    <x-category-button :category="$post->category"/>
+                <p class="mt-4 block text-gray-400 text-xs">
+                    Published
+                    <time>{{ $post->created_at->diffForHumans() }}</time>
+                </p>
+
+                <img src="/images/hey.svg" alt="Lary avatar" class="w-20 h-20 rounded-full lg:mx-auto">
+
+                <div class="flex items-center lg:justify-center text-sm mt-4">
+                    <div class="ml-3 text-left">
+                        <h5 class="font-bold">
+                            <a href="/?author={{ $post->author->username }}">{{ $post->author->name }}</a>
+                        </h5>
+                    </div>
                 </div>
             </div>
 
-            <!-- Post Title -->
-            <header class="text-center space-y-4">
-                <h1 class="font-bold text-3xl lg:text-5xl leading-tight">
+            <div class="col-span-8">
+                <div class="hidden lg:flex justify-between mb-6">
+                    <a href="/"
+                       class="transition-colors duration-300 relative inline-flex items-center text-lg hover:text-blue-500">
+                        <svg width="22" height="22" viewBox="0 0 22 22" class="mr-2">
+                            <g fill="none" fill-rule="evenodd">
+                                <path stroke="#000" stroke-opacity=".012" stroke-width=".5" d="M21 1v20.16H.84V1z">
+                                </path>
+                                <path class="fill-current"
+                                      d="M13.854 7.224l-3.847 3.856 3.847 3.856-1.184 1.184-5.04-5.04 5.04-5.04z">
+                                </path>
+                            </g>
+                        </svg>
+
+                        Back to Posts
+                    </a>
+
+                    <div class="space-x-2">
+                        <x-category-button :category="$post->category"/>
+                    </div>
+                </div>
+
+                <h1 class="font-bold text-3xl lg:text-4xl mb-10">
                     {{ $post->title }}
                 </h1>
 
-                <div class="flex items-center justify-center space-x-4 text-gray-500 text-sm">
-                    <time>Published {{ $post->created_at->diffForHumans() }}</time>
-                    <span>•</span>
-                    <a href="/?author={{ $post->author->username }}" class="hover:text-blue-500">{{ $post->author->name }}</a>
-                </div>
-            </header>
-
-            <!-- Featured Image -->
-            <div class="w-full">
-                @php
-                    $illustrations = [
-                        '/images/illustration-1.jpg',
-                        '/images/illustration-2.jpg',
-                        '/images/illustration-3.jpg',
-                        '/images/illustration-4.jpg',
-                        '/images/illustration-5.png'
-                    ];
-                    $imageIndex = $post->id % count($illustrations);
-                    $selectedImage = $illustrations[$imageIndex];
-                @endphp
-                <img src="{{ $selectedImage }}" alt="Blog Post illustration" class="rounded-xl w-full h-64 lg:h-96 object-cover shadow-lg">
+                <div class="space-y-4 lg:text-lg leading-loose">{!! $post->body !!}</div>
             </div>
 
-            <!-- Post Content -->
-            <div class="prose prose-lg max-w-none">
-                <div class="space-y-4 lg:text-lg leading-relaxed">{!! $post->body !!}</div>
-            </div>
+            <section class="col-span-8 col-start-5 mt-10 space-y-6">
+                @include ('posts._add-comment-form')
 
-            <!-- Author Info -->
-            <div class="flex items-center justify-center pt-8 border-t border-gray-200">
-{{--                <img src="/images/lary-avatar.svg" alt="Author avatar" class="w-12 h-12 rounded-full">--}}
-                <div class="ml-4">
-                    <h5 class="font-bold text-lg">
-                        <a href="/?author={{ $post->author->username }}" class="hover:text-blue-500">{{ $post->author->name }}</a>
-                    </h5>
-                </div>
-            </div>
+                @foreach ($post->comments as $comment)
+                    <x-post-comment :comment="$comment"/>
+                @endforeach
+            </section>
         </article>
     </main>
 </x-layout>
